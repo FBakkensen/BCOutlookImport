@@ -2,6 +2,22 @@
 
 All notable changes to the "BC Outlook Email Import" extension will be documented in this file.
 
+## [1.1.4] - 2023-10-16
+
+### Added
+- Enhanced visual indicator for the email drop zone to make it more intuitive
+- Added SVG icon for improved visibility of the drop target
+- Implemented subtle animation to draw attention to the drop area
+
+### Changed
+- Adjusted the email drop control dimensions to better fit in the factbox
+- Improved visual styling with more distinct colors and borders
+- Enhanced user experience with clearer drop instructions
+
+### Fixed
+- Fixed issue where the email drop control was not visible in the factbox
+- Improved control initialization to ensure consistent rendering
+
 ## [1.1.3] - 2023-10-15
 
 ### Changed

@@ -1,30 +1,50 @@
 .outlook-drop-zone {
-    width: 100%;
-    height: 100%;
-    min-height: 100px;
-    border: 2px dashed #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100px !important;
+    border: 3px dashed #0078d4 !important;
+    border-radius: 5px !important;
+    padding: 10px !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    background-color: #e6f2ff !important;
+    position: relative !important;
+    margin: 5px 0 !important;
+    box-sizing: border-box !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .outlook-drop-zone.drag-over {
-    background-color: #f0f8ff;
-    border-color: #007bff;
+    background-color: #d0e6ff !important;
+    border-color: #005cb3 !important;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4) !important;
 }
 
 .drop-message {
-    color: #555;
-    font-size: 14px;
-    font-weight: 500;
+    color: #0e0e0e !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    margin-top: 6px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.drop-icon {
+    font-size: 24px !important;
+    color: #0078d4 !important;
+    margin-bottom: 5px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .outlook-drop-zone:hover {
-    border-color: #999;
+    border-color: #005cb3 !important;
+    background-color: #d0e6ff !important;
+    transform: scale(1.01) !important;
 }

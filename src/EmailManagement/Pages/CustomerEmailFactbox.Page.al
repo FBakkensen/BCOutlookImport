@@ -6,7 +6,7 @@ page 50200 "Customer Email Factbox"
     InsertAllowed = false;
     ModifyAllowed = false;
     Editable = false;
-    
+
     layout
     {
         area(Content)
@@ -15,7 +15,7 @@ page 50200 "Customer Email Factbox"
             {
                 Caption = 'Emails';
                 FreezeColumn = "Email Subject";
-                
+
                 field("Entry No."; Rec."Entry No.")
                 {
                     ApplicationArea = All;
@@ -57,7 +57,7 @@ page 50200 "Customer Email Factbox"
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
@@ -68,7 +68,7 @@ page 50200 "Customer Email Factbox"
                 Caption = 'View Email';
                 Image = ViewDocumentLine;
                 ToolTip = 'View the selected email.';
-                
+
                 trigger OnAction()
                 var
                     EmailViewPage: Page "Email View";
@@ -79,7 +79,7 @@ page 50200 "Customer Email Factbox"
             }
         }
     }
-    
+
     trigger OnOpenPage()
     var
         EmailService: Codeunit "Email Service";

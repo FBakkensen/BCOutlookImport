@@ -4,10 +4,14 @@ controladdin "Outlook Email Drop"
     StartupScript = 'src/EmailManagement/Controls/Scripts/StartupScript.js';
     StyleSheets = 'src/EmailManagement/Controls/Styles/OutlookEmailDrop.css';
 
-    MinimumWidth = 200;
-    MinimumHeight = 150;
+    // Adjusted dimensions for better factbox fit
+    MinimumWidth = 250;
+    MinimumHeight = 120;
+    MaximumHeight = 200;
+
+    // Ensure stretching behavior
     VerticalStretch = true;
-    VerticalShrink = true;
+    VerticalShrink = false;  // Changed to false to prevent shrinking too small
     HorizontalStretch = true;
     HorizontalShrink = true;
 
