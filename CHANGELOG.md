@@ -2,6 +2,29 @@
 
 All notable changes to the "BC Outlook Email Import" extension will be documented in this file.
 
+## [1.1.8] - 2025-03-06
+
+### Fixed
+- Fixed persistent "Please select a customer before processing email" error when dropping emails
+- Added proper customer selection synchronization between Customer List and Email Drop factbox
+- Implemented safe initialization checks to prevent runtime errors
+- Added IsReady function to the factbox to safely verify control state before operations
+
+## [1.1.7] - 2025-03-06
+
+### Fixed
+- Fixed initialization error "The control add-in on control EmailDrop on page Email Drop has not been instantiated"
+- Added control ready state tracking to prevent errors when the page is first loading
+- Improved error handling in Customer List page to handle control initialization gracefully
+- Enhanced factbox visibility to ensure proper initialization before invoking control methods
+
+## [1.1.6] - 2025-03-06
+
+### Fixed
+- Fixed issue where importing emails from Customer List view would show "Please select a customer" error even when a customer was selected
+- Improved customer selection logic in the factbox to ensure proper synchronization with the currently selected customer
+- Added visibility control for factboxes to hide them when no customer is selected
+
 ## [1.1.5] - 2025-03-06
 
 ### Added

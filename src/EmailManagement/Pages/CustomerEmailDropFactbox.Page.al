@@ -17,7 +17,8 @@ page 50203 "Customer Email Drop Factbox"
 
                 trigger ControlReady()
                 begin
-                    CurrPage.EmailDrop.SetCustomerId(Rec."Customer No.");
+                    ControlIsReady := true;
+                    CurrPage.EmailDrop.SetCustomerId(CustomerNo);
                     CurrPage.EmailDrop.SetPlaceholderText('Drop Outlook email here (.eml or .msg)');
                 end;
 
@@ -25,11 +26,12 @@ page 50203 "Customer Email Drop Factbox"
                 var
                     EmailImportMgt: Codeunit "Email Import Management";
                 begin
-                    if Rec."Customer No." = '' then
+                    // Check if we have a valid customer
+                    if CustomerNo = '' then
                         Error('Please select a customer before dropping emails.');
 
                     // This is just an initial handling - the real processing happens in the other events
-                    EmailImportMgt.InitializeSimpleEmailImport(Rec."Customer No.", FileName, FileExtension, FileContent);
+                    EmailImportMgt.InitializeSimpleEmailImport(CustomerNo, FileName, FileExtension, FileContent);
                     CurrPage.Update(false);
                     Message('Email "%1" imported successfully.', FileName);
                 end;
@@ -40,12 +42,14 @@ page 50203 "Customer Email Drop Factbox"
                 var
                     EmailImportMgt: Codeunit "Email Import Management";
                 begin
-                    if Rec."Customer No." = '' then
+
+                    // Check if we have a valid customer
+                    if CustomerNo = '' then
                         Error('Please select a customer before processing email.');
 
                     // Initialize the email import with parsed data
                     EmailImportMgt.InitializeEmailImport(
-                        Rec."Customer No.",
+                        CustomerNo,
                         FileName,
                         FileExtension,
                         FileContent,
@@ -92,4 +96,24 @@ page 50203 "Customer Email Drop Factbox"
             }
         }
     }
+
+    var
+        ControlIsReady: Boolean;
+        CustomerNo: Text;
+
+    // Add a procedure to set the current customer number
+    procedure SetCustomerNo(_CustomerNo: Text)
+    begin
+        CustomerNo := _CustomerNo;
+
+        // Only update the control if it's ready
+        if ControlIsReady then
+            CurrPage.EmailDrop.SetCustomerId(_CustomerNo);
+    end;
+
+    // Add a procedure to check if the control is ready
+    procedure IsReady(): Boolean
+    begin
+        exit(ControlIsReady);
+    end;
 }

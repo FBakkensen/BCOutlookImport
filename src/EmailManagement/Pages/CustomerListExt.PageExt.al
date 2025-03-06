@@ -20,4 +20,11 @@ pageextension 50201 "Customer List Email Ext" extends "Customer List"
             }
         }
     }
+
+    trigger OnAfterGetCurrRecord()
+    var
+        FactboxReady: Boolean;
+    begin
+        CurrPage.CustomerEmailDropFactbox.Page.SetCustomerNo(Rec."No.");
+    end;
 }
