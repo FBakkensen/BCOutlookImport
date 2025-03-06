@@ -69,20 +69,24 @@ function InitializeControl() {
 function handleDragOver(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.classList.add('drag-over');
 
-    // Update the drop message to provide clear instructions
-    const dropMessage = this.querySelector('.drop-message');
-    if (dropMessage) {
-        dropMessage.textContent = 'Release to import email';
-        dropMessage.style.fontWeight = 'bold';
-    }
+    // Debounce the drag-over effect
+    if (!this.classList.contains('drag-over')) {
+        this.classList.add('drag-over');
 
-    // Make the icon larger and animate it slightly
-    const dropIcon = this.querySelector('.drop-icon');
-    if (dropIcon) {
-        dropIcon.style.fontSize = '30px';
-        dropIcon.style.transition = 'all 0.2s ease';
+        // Update the drop message to provide clear instructions
+        const dropMessage = this.querySelector('.drop-message');
+        if (dropMessage) {
+            dropMessage.textContent = 'Release to import email';
+            dropMessage.style.fontWeight = 'bold';
+        }
+
+        // Make the icon larger and animate it slightly
+        const dropIcon = this.querySelector('.drop-icon');
+        if (dropIcon) {
+            dropIcon.style.fontSize = '30px';
+            dropIcon.style.transition = 'all 0.2s ease';
+        }
     }
 }
 
@@ -130,41 +134,37 @@ function handleFileDrop(event) {
     event.stopPropagation();
     this.classList.remove('drag-over');
 
-    // Reset the drop message
-    const dropMessage = this.querySelector('.drop-message');
-    if (dropMessage) {
-        dropMessage.textContent = 'Drop Outlook email here';
-        dropMessage.style.fontWeight = '500';
-    }
-
-    // Reset the icon
-    const dropIcon = this.querySelector('.drop-icon');
-    if (dropIcon) {
-        dropIcon.style.fontSize = '24px';
-    }
+    console.log('File dropped');
 
     // Check if files were dropped
     if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
         const file = event.dataTransfer.files[0];
+        console.log('Processing file:', file.name);
         processFile(file);
+    } else {
+        console.warn('No files detected in drop event');
     }
 }
 
 function processFile(file) {
+    console.log('Starting to process file:', file.name);
+
     // Check if file is an email (eml or msg)
     const validExtensions = ['.eml', '.msg'];
     const fileName = file.name;
     const fileExtension = '.' + fileName.split('.').pop().toLowerCase();
 
     if (!validExtensions.includes(fileExtension)) {
+        console.error('Unsupported file type:', fileExtension);
         Microsoft.Dynamics.NAV.InvokeExtensibilityMethod('DropError', ['Only .eml or .msg files are supported']);
         return;
     }
 
-    // Read the file content
+    // Read the file content asynchronously
     const reader = new FileReader();
 
     reader.onload = function(e) {
+        console.log('File read successfully:', fileName);
         const base64Content = btoa(
             new Uint8Array(e.target.result)
                 .reduce((data, byte) => data + String.fromCharCode(byte), '')
@@ -172,6 +172,19 @@ function processFile(file) {
 
         // Parse email content to extract metadata
         const emailData = parseEmailFile(fileName, fileExtension.substring(1), e.target.result);
+        console.log('Email data parsed:', emailData);
+
+        // Log before sending to AL
+        console.log('Invoking EmailParsed event with data:', {
+            fileName,
+            fileExtension: fileExtension.substring(1),
+            base64Content,
+            subject: emailData.subject,
+            senderEmail: emailData.senderEmail,
+            senderName: emailData.senderName,
+            receivedDate: emailData.receivedDate,
+            hasAttachments: emailData.hasAttachments
+        });
 
         // Send the parsed email data to AL
         Microsoft.Dynamics.NAV.InvokeExtensibilityMethod(
@@ -210,6 +223,7 @@ function processFile(file) {
     };
 
     reader.onerror = function() {
+        console.error('Error reading the file:', fileName);
         Microsoft.Dynamics.NAV.InvokeExtensibilityMethod('DropError', ['Error reading the file']);
     };
 

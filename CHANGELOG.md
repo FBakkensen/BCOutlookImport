@@ -2,6 +2,18 @@
 
 All notable changes to the "BC Outlook Email Import" extension will be documented in this file.
 
+## [1.1.5] - 2023-10-18
+
+### Added
+- Implemented event handlers for `EmailParsed`, `AttachmentParsed`, and `EmailParsingComplete` events
+- Added detailed logging in JavaScript for better troubleshooting of email processing
+- Added performance optimization for drag-over events to improve responsiveness
+
+### Fixed
+- Fixed critical issue where dropped email files were not being processed due to missing event handlers
+- Resolved event mapping between JavaScript and AL to ensure proper data flow
+- Improved error handling and user feedback during the email import process
+
 ## [1.1.4] - 2023-10-16
 
 ### Added

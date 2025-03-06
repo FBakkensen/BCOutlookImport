@@ -34,6 +34,57 @@ page 50203 "Customer Email Drop Factbox"
                     Message('Email "%1" imported successfully.', FileName);
                 end;
 
+                trigger EmailParsed(FileName: Text; FileExtension: Text; FileContent: Text;
+                              Subject: Text; SenderEmail: Text; SenderName: Text;
+                              ReceivedDate: DateTime; HasAttachments: Boolean)
+                var
+                    EmailImportMgt: Codeunit "Email Import Management";
+                begin
+                    if Rec."Customer No." = '' then
+                        Error('Please select a customer before processing email.');
+
+                    // Initialize the email import with parsed data
+                    EmailImportMgt.InitializeEmailImport(
+                        Rec."Customer No.",
+                        FileName,
+                        FileExtension,
+                        FileContent,
+                        Subject,
+                        SenderEmail,
+                        SenderName,
+                        ReceivedDate,
+                        HasAttachments
+                    );
+
+                    // Display a message about the parsed email
+                    Message('Email from %1 (%2) parsed successfully.', SenderName, SenderEmail);
+                end;
+
+                trigger EmailParsingComplete()
+                var
+                    EmailImportMgt: Codeunit "Email Import Management";
+                begin
+                    // Finalize the email import process
+                    EmailImportMgt.FinalizeEmailImport();
+                    CurrPage.Update(false);
+                end;
+
+                trigger AttachmentParsed(EmailFileName: Text; AttachmentFileName: Text;
+                                       FileExtension: Text; MimeType: Text;
+                                       FileContent: Text; FileSize: Integer)
+                var
+                    EmailImportMgt: Codeunit "Email Import Management";
+                begin
+                    // Add attachment to the current email import
+                    EmailImportMgt.AddAttachmentToImport(
+                        AttachmentFileName,
+                        FileExtension,
+                        MimeType,
+                        FileContent,
+                        FileSize
+                    );
+                end;
+
                 trigger DropError(ErrorMessage: Text)
                 begin
                     Error(ErrorMessage);

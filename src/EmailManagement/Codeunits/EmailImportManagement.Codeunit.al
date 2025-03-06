@@ -57,6 +57,9 @@ codeunit 50202 "Email Import Management"
         Base64Convert: Codeunit "Base64 Convert";
         OutStream: OutStream;
     begin
+        // Log initialization
+        Message('Initializing email import for: %1', FileName);
+
         // Clear any existing temporary data
         TempEmailImport.DeleteAll();
         TempAttachmentImports.DeleteAll();
@@ -119,6 +122,9 @@ codeunit 50202 "Email Import Management"
     begin
         if not IsInitialized then
             Error('Email import not initialized. Call InitializeEmailImport first.');
+
+        // Log finalization
+        Message('Finalizing email import for: %1', TempEmailImport."File Name");
 
         // Create the email record
         OutlookEmail.Init();
