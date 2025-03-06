@@ -2,6 +2,14 @@
 
 All notable changes to the "BC Outlook Email Import" extension will be documented in this file.
 
+## [1.1.9] - 2025-03-06
+
+### Fixed
+- Fixed "The record in table Outlook Email Attachment already exists" error when importing files with attachments
+- Improved temporary record handling to properly clean up between email imports
+- Enhanced attachment processing to respect AutoIncrement behavior of Entry No. field
+- Added thorough cleanup procedures to ensure clean state between operations
+
 ## [1.1.8] - 2025-03-06
 
 ### Fixed

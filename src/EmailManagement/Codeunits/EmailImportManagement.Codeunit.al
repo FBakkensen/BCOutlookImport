@@ -60,8 +60,10 @@ codeunit 50202 "Email Import Management"
         // Log initialization
         Message('Initializing email import for: %1', FileName);
 
-        // Clear any existing temporary data
+        // Ensure clean state - reset all temporary data
+        Clear(TempEmailImport);
         TempEmailImport.DeleteAll();
+        TempAttachmentImports.Reset();
         TempAttachmentImports.DeleteAll();
 
         // Prepare the email record with parsed data
@@ -119,6 +121,7 @@ codeunit 50202 "Email Import Management"
         OutlookEmailAttachment: Record "Outlook Email Attachment";
         InStream: InStream;
         OutStream: OutStream;
+        EmailEntryNo: Integer;
     begin
         if not IsInitialized then
             Error('Email import not initialized. Call InitializeEmailImport first.');
@@ -145,14 +148,18 @@ codeunit 50202 "Email Import Management"
             CopyStream(OutStream, InStream);
         end;
 
-        // Insert the email record
+        // Insert the email record and get the entry no
         OutlookEmail.Insert(true);
+        EmailEntryNo := OutlookEmail."Entry No.";
 
         // Process attachments if any
         if TempAttachmentImports.FindSet() then
             repeat
+                // Create a new record for each attachment
+                Clear(OutlookEmailAttachment);
                 OutlookEmailAttachment.Init();
-                OutlookEmailAttachment."Email Entry No." := OutlookEmail."Entry No.";
+                // Don't set Entry No, let AutoIncrement handle it
+                OutlookEmailAttachment."Email Entry No." := EmailEntryNo;
                 OutlookEmailAttachment."File Name" := TempAttachmentImports."File Name";
                 OutlookEmailAttachment."File Extension" := TempAttachmentImports."File Extension";
                 OutlookEmailAttachment."MIME Type" := TempAttachmentImports."MIME Type";
@@ -166,13 +173,18 @@ codeunit 50202 "Email Import Management"
                     CopyStream(OutStream, InStream);
                 end;
 
+                // Insert the attachment record
                 OutlookEmailAttachment.Insert(true);
             until TempAttachmentImports.Next() = 0;
 
-        // Reset state
+        // Clean up and reset state
+        Clear(TempEmailImport);
+        TempEmailImport.DeleteAll();
+        TempAttachmentImports.Reset();
+        TempAttachmentImports.DeleteAll();
         IsInitialized := false;
 
-        exit(OutlookEmail."Entry No.");
+        exit(EmailEntryNo);
     end;
 
     /// <summary>
