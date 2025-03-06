@@ -4,6 +4,13 @@ pageextension 50200 "Customer Card Email Ext" extends "Customer Card"
     {
         addfirst(factboxes)
         {
+            part(CustomerEmailDropFactbox; "Customer Email Drop Factbox")
+            {
+                ApplicationArea = All;
+                Caption = 'Email Drop';
+                SubPageLink = "Customer No." = field("No.");
+                UpdatePropagation = SubPart;
+            }
             part(CustomerEmailFactbox; "Customer Email Factbox")
             {
                 ApplicationArea = All;

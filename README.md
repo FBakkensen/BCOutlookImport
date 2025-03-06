@@ -18,10 +18,11 @@ This extension adds functionality to Business Central to import emails directly 
 ## Usage
 
 1. Open a Customer Card or Customer List
-2. Find the "Customer Emails" factbox 
-3. Drag an email from Outlook and drop it onto the drop zone in the factbox
-4. The email will be processed and appear in the list
-5. Click "View Email" to see details and attachments
+2. Find the "Email Drop" factbox for dragging and dropping emails
+3. Find the "Customer Emails" factbox to view imported emails
+4. Drag an email from Outlook and drop it onto the drop zone in the "Email Drop" factbox
+5. The email will be processed and appear in the "Customer Emails" factbox
+6. Click "View Email" to see details and attachments
 
 ## Technical Implementation
 
@@ -30,7 +31,7 @@ The extension is built using these components:
 - Tables for storing emails and their attachments
 - Control Add-in for drag and drop functionality using JavaScript
 - Browser-side email parsing to extract metadata and attachments
-- Factbox on Customer pages
+- Separate factboxes for email drop and email viewing
 - Clean separation between UI (parsing) and business logic (storage)
 
 ### Architecture
@@ -56,6 +57,6 @@ The solution follows SOLID principles:
 The extension uses object IDs in the range 50200-50249:
 
 - Tables: 50200-50201
-- Pages: 50200-50202
+- Pages: 50200-50203
 - Page Extensions: 50200-50201
 - Codeunits: 50200, 50202

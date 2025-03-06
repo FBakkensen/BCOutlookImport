@@ -2,6 +2,14 @@
 
 All notable changes to the "BC Outlook Email Import" extension will be documented in this file.
 
+## [1.1.3] - 2023-10-15
+
+### Changed
+- Separated user control and data viewing into different factboxes
+- Created a new factbox for the user control
+- Updated the existing factbox to only display email data
+- Updated Customer Card and Customer List page extensions to include both factboxes
+
 ## [1.1.2] - 2023-10-15
 
 ### Changed
