@@ -2,7 +2,7 @@
 
 All notable changes to the "BC Outlook Email Import" extension will be documented in this file.
 
-## [1.1.5] - 2023-10-18
+## [1.1.5] - 2025-03-06
 
 ### Added
 - Implemented event handlers for `EmailParsed`, `AttachmentParsed`, and `EmailParsingComplete` events
@@ -14,7 +14,7 @@ All notable changes to the "BC Outlook Email Import" extension will be documente
 - Resolved event mapping between JavaScript and AL to ensure proper data flow
 - Improved error handling and user feedback during the email import process
 
-## [1.1.4] - 2023-10-16
+## [1.1.4] - 2025-03-06
 
 ### Added
 - Enhanced visual indicator for the email drop zone to make it more intuitive
@@ -30,7 +30,7 @@ All notable changes to the "BC Outlook Email Import" extension will be documente
 - Fixed issue where the email drop control was not visible in the factbox
 - Improved control initialization to ensure consistent rendering
 
-## [1.1.3] - 2023-10-15
+## [1.1.3] - 2025-03-06
 
 ### Changed
 - Separated user control and data viewing into different factboxes
@@ -38,12 +38,12 @@ All notable changes to the "BC Outlook Email Import" extension will be documente
 - Updated the existing factbox to only display email data
 - Updated Customer Card and Customer List page extensions to include both factboxes
 
-## [1.1.2] - 2023-10-15
+## [1.1.2] - 2025-03-06
 
 ### Changed
 - Updated object IDs to match the new range specified in app.json (50200-50249)
 
-## [1.1.1] - 2023-10-15
+## [1.1.1] - 2025-03-06
 
 ### Fixed
 - Fixed linting errors in control add-in method definitions
@@ -52,7 +52,7 @@ All notable changes to the "BC Outlook Email Import" extension will be documente
 - Removed promotion properties from ListPart actions
 - Simplified user control event handling
 
-## [1.1.0] - 2023-10-12
+## [1.1.0] - 2025-03-06
 
 ### Changed
 - Moved email parsing logic from AL to JavaScript for better performance
@@ -65,7 +65,7 @@ All notable changes to the "BC Outlook Email Import" extension will be documente
 ### Removed
 - Removed EmailParser codeunit as parsing is now done in JavaScript
 
-## [1.0.0] - 2023-10-05
+## [1.0.0] - 2025-03-06
 
 ### Added
 - Initial release of the BC Outlook Email Import extension
