@@ -2,6 +2,60 @@
 
 All notable changes to the "BC Outlook Email Import" extension will be documented in this file.
 
+## [1.3.3] - 2025-03-06
+
+### Fixed
+- Fixed issue with email body displayed as Base64-encoded text instead of readable content
+- Added detection and decoding of Base64-encoded content in email bodies
+- Enhanced content block processing to handle Base64 encoding within multipart messages
+- Improved email format detection for Microsoft Exchange emails with encoded content
+- Added more detailed logging for Base64 content detection and decoding
+
+## [1.3.2] - 2025-03-06
+
+### Fixed
+- Fixed issue with "boundary=" text appearing in email body for Microsoft Exchange/Outlook emails
+- Added special handling for Microsoft-specific boundary formats
+- Implemented more robust boundary detection and cleanup algorithms
+- Added extensive logging for easier diagnostics of email parsing issues
+- Enhanced content extraction with Microsoft Exchange specific content block handling
+
+## [1.3.1] - 2025-03-06
+
+### Fixed
+- Fixed email body extraction for Microsoft Exchange/Outlook format emails
+- Enhanced boundary detection for special formatted boundary markers
+- Improved MIME multipart parsing for complex email formats
+- Added more robust content extraction algorithms for difficult email formats
+- Added additional cleanup of boundary markers in the final text output
+
+## [1.3.0] - 2025-03-06
+
+### Added
+- Added functionality to delete emails and their related attachments
+- Added delete action to the Email View page with confirmation dialog
+- Added delete action to the Customer Email Factbox for quick deletion
+- Implemented cascading deletion to ensure all related data is removed
+
+## [1.2.1] - 2025-03-06
+
+### Fixed
+- Fixed email body extraction to properly handle multipart MIME emails
+- Improved boundary detection for complex email formats
+- Added support for quoted-printable encoding in email content
+- Enhanced content extraction to handle both plain text and HTML parts
+- Improved whitespace handling and formatting of extracted email bodies
+
+## [1.2.0] - 2025-03-06
+
+### Added
+- Added email body storage and display capability
+- Implemented real email content extraction from uploaded .eml and .msg files
+- Added comprehensive parsing to extract subject, sender, date, and body from email headers
+- Added HTML cleanup for better readability of email body content
+- Added email body display in the Email View page
+- Improved email content handling for better user experience
+
 ## [1.1.9] - 2025-03-06
 
 ### Fixed

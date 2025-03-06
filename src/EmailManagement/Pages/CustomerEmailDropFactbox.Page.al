@@ -38,7 +38,7 @@ page 50203 "Customer Email Drop Factbox"
 
                 trigger EmailParsed(FileName: Text; FileExtension: Text; FileContent: Text;
                               Subject: Text; SenderEmail: Text; SenderName: Text;
-                              ReceivedDate: DateTime; HasAttachments: Boolean)
+                              ReceivedDate: DateTime; HasAttachments: Boolean; Body: Text)
                 var
                     EmailImportMgt: Codeunit "Email Import Management";
                 begin
@@ -57,7 +57,8 @@ page 50203 "Customer Email Drop Factbox"
                         SenderEmail,
                         SenderName,
                         ReceivedDate,
-                        HasAttachments
+                        HasAttachments,
+                        Body
                     );
 
                     // Display a message about the parsed email

@@ -77,6 +77,31 @@ page 50200 "Customer Email Factbox"
                     EmailViewPage.RunModal();
                 end;
             }
+
+            action(DeleteEmail)
+            {
+                ApplicationArea = All;
+                Caption = 'Delete Email';
+                Image = Delete;
+                ToolTip = 'Delete this email and all its attachments.';
+
+                trigger OnAction()
+                var
+                    EmailService: Codeunit "Email Service";
+                    ConfirmMsg: Label 'Are you sure you want to delete this email and all its attachments? This action cannot be undone.';
+                    SuccessMsg: Label 'Email and attachments have been deleted successfully.';
+                    ErrorMsg: Label 'An error occurred while trying to delete the email.';
+                begin
+                    if not Confirm(ConfirmMsg, false) then
+                        exit;
+
+                    if EmailService.DeleteEmail(Rec."Entry No.") then begin
+                        Message(SuccessMsg);
+                        CurrPage.Update(false);
+                    end else
+                        Error(ErrorMsg);
+                end;
+            }
         }
     }
 

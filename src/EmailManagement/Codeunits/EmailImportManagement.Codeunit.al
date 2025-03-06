@@ -52,10 +52,11 @@ codeunit 50202 "Email Import Management"
     /// </summary>
     procedure InitializeEmailImport(CustomerNo: Code[20]; FileName: Text; FileExtension: Text; FileContent: Text;
                                   Subject: Text; SenderEmail: Text; SenderName: Text;
-                                  ReceivedDate: DateTime; HasAttachments: Boolean)
+                                  ReceivedDate: DateTime; HasAttachments: Boolean; BodyContent: Text)
     var
         Base64Convert: Codeunit "Base64 Convert";
         OutStream: OutStream;
+        BodyOutStream: OutStream;
     begin
         // Log initialization
         Message('Initializing email import for: %1', FileName);
@@ -80,6 +81,12 @@ codeunit 50202 "Email Import Management"
         // Store the email content
         TempEmailImport."Email Content".CreateOutStream(OutStream);
         Base64Convert.FromBase64(FileContent, OutStream);
+
+        // Store the email body
+        if BodyContent <> '' then begin
+            TempEmailImport."Email Body".CreateOutStream(BodyOutStream);
+            BodyOutStream.WriteText(BodyContent);
+        end;
 
         TempEmailImport.Insert();
         IsInitialized := true;
@@ -145,6 +152,14 @@ codeunit 50202 "Email Import Management"
         if TempEmailImport."Email Content".HasValue then begin
             TempEmailImport."Email Content".CreateInStream(InStream);
             OutlookEmail."Email Content".CreateOutStream(OutStream);
+            CopyStream(OutStream, InStream);
+        end;
+
+        // Copy email body if exists
+        TempEmailImport.CalcFields("Email Body");
+        if TempEmailImport."Email Body".HasValue then begin
+            TempEmailImport."Email Body".CreateInStream(InStream);
+            OutlookEmail."Email Body".CreateOutStream(OutStream);
             CopyStream(OutStream, InStream);
         end;
 

@@ -21,7 +21,7 @@ controladdin "Outlook Email Drop"
     event DropError(errorMessage: Text);
     event EmailParsed(fileName: Text; fileExtension: Text; fileContent: Text;
                     subject: Text; senderEmail: Text; senderName: Text;
-                    receivedDate: DateTime; hasAttachments: Boolean);
+                    receivedDate: DateTime; hasAttachments: Boolean; body: Text);
     event AttachmentParsed(emailFileName: Text; attachmentFileName: Text;
                         fileExtension: Text; mimeType: Text;
                         fileContent: Text; fileSize: Integer);

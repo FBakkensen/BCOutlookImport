@@ -70,6 +70,11 @@ table 50200 "Outlook Email"
             DataClassification = SystemMetadata;
             Editable = false;
         }
+        field(13; "Email Body"; Blob)
+        {
+            Caption = 'Email Body';
+            DataClassification = CustomerContent;
+        }
     }
 
     keys

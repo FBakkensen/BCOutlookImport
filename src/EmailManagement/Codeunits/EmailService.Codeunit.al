@@ -71,4 +71,28 @@ codeunit 50200 "Email Service"
         FileName := OutlookEmailAttachment."File Name";
         exit(true);
     end;
+
+    /// <summary>
+    /// Deletes an email and all its related attachments
+    /// </summary>
+    /// <param name="EmailEntryNo">The entry number of the email to delete</param>
+    /// <returns>True if the email was successfully deleted, false otherwise</returns>
+    procedure DeleteEmail(EmailEntryNo: Integer): Boolean
+    var
+        OutlookEmail: Record "Outlook Email";
+        OutlookEmailAttachments: Record "Outlook Email Attachment";
+    begin
+        // First, check if the email exists
+        if not OutlookEmail.Get(EmailEntryNo) then
+            exit(false);
+
+        // Delete all related attachments first
+        OutlookEmailAttachments.Reset();
+        OutlookEmailAttachments.SetRange("Email Entry No.", EmailEntryNo);
+        if OutlookEmailAttachments.FindSet() then
+            OutlookEmailAttachments.DeleteAll(true);
+
+        // Then delete the email itself
+        exit(OutlookEmail.Delete(true));
+    end;
 }

@@ -60,6 +60,19 @@ page 50201 "Email View"
                 }
             }
 
+            group(EmailContent)
+            {
+                Caption = 'Email Body';
+
+                field(EmailBodyText; GetEmailBody())
+                {
+                    ApplicationArea = All;
+                    Caption = 'Body';
+                    MultiLine = true;
+                    ShowCaption = false;
+                }
+            }
+
             part(Attachments; "Email Attachments Subpage")
             {
                 ApplicationArea = All;
@@ -102,6 +115,58 @@ page 50201 "Email View"
                     FileManagement.BLOBExport(TempBlob, FileName, true);
                 end;
             }
+
+            action(DeleteEmail)
+            {
+                ApplicationArea = All;
+                Caption = 'Delete Email';
+                Image = Delete;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedOnly = true;
+                ToolTip = 'Delete this email and all its attachments.';
+
+                trigger OnAction()
+                var
+                    EmailService: Codeunit "Email Service";
+                    ConfirmMsg: Label 'Are you sure you want to delete this email and all its attachments? This action cannot be undone.';
+                    SuccessMsg: Label 'Email and attachments have been deleted successfully.';
+                    ErrorMsg: Label 'An error occurred while trying to delete the email.';
+                begin
+                    if not Confirm(ConfirmMsg, false) then
+                        exit;
+
+                    if EmailService.DeleteEmail(Rec."Entry No.") then begin
+                        Message(SuccessMsg);
+                        CurrPage.Close();
+                    end else
+                        Error(ErrorMsg);
+                end;
+            }
         }
     }
+
+    local procedure GetEmailBody(): Text
+    var
+        InStream: InStream;
+        EmailBody: Text;
+        CR: Char;
+        LF: Char;
+    begin
+        CR := 13;
+        LF := 10;
+
+        Rec.CalcFields("Email Body");
+        if not Rec."Email Body".HasValue then
+            exit('No email body content available.');
+
+        Rec."Email Body".CreateInStream(InStream);
+        InStream.ReadText(EmailBody);
+
+        // Ensure proper line breaks
+        EmailBody := EmailBody.Replace(Format(CR) + Format(LF), '<br>');
+        EmailBody := EmailBody.Replace(Format(LF), '<br>');
+
+        exit(EmailBody);
+    end;
 }
